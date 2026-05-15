@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Mario Galaxy Movie — Step Outline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Karla:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090f;
+  --card: #0d1018;
+  --card-hover: #121620;
+  --text: #bfbcb5;
+  --text-dim: #5a5a6e;
+  --text-bright: #ede9e0;
+  --border: #181e2c;
+  --A: #e05252;
+  --B: #f48bae;
+  --C: #ff8c00;
+  --D: #52c47a;
+  --E: #4a90d9;
+  --F: #2acfcf;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-size:15px;line-height:1.75;padding:50px 24px 110px;max-width:960px;margin:0 auto}
+
+/* EDIT TOGGLE */
+#edit-toggle{position:fixed;bottom:28px;right:28px;z-index:100;background:#1a2038;border:1px solid #2a3250;color:var(--text-bright);font-family:'Karla',sans-serif;font-size:.82em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;border-radius:30px;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.45);display:flex;align-items:center;gap:8px}
+#edit-toggle:hover{background:#232a44;border-color:#3a4460}
+#edit-toggle.active{background:linear-gradient(135deg,#1a3a2a,#1a2a3a);border-color:var(--D);color:var(--D)}
+
+/* EDIT BANNER */
+#edit-banner{display:none;position:sticky;top:0;z-index:50;background:#0c1a10;border-bottom:1px solid #1a3a20;padding:9px 20px;font-size:.74em;color:var(--D);letter-spacing:.14em;text-transform:uppercase;text-align:center;font-weight:700;margin:0 -24px 30px}
+body.edit-mode #edit-banner{display:block}
+
+/* MASTHEAD */
+.masthead{text-align:center;padding-bottom:48px;margin-bottom:48px;border-bottom:1px solid var(--border);position:relative}
+.masthead::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:80px;height:3px;background:linear-gradient(90deg,var(--A),var(--B),var(--C),var(--D),var(--E),var(--F));border-radius:2px}
+.masthead h1{font-family:'Playfair Display',serif;font-size:clamp(1.8em,4vw,3em);font-weight:900;color:var(--text-bright);letter-spacing:-.01em;line-height:1.1;margin-bottom:10px}
+.masthead h1 em{font-style:italic;color:var(--F)}
+.masthead .sub{color:var(--text-dim);font-size:.78em;letter-spacing:.2em;text-transform:uppercase}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;margin-bottom:50px;padding:18px 24px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:.8em;color:var(--text-dim);letter-spacing:.04em}
+.legend-pip{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.legend-item strong{color:var(--text);font-weight:600}
+
+/* ACT HEADERS */
+.act-header{display:flex;align-items:baseline;gap:16px;margin:52px 0 22px;padding:14px 20px;background:rgba(255,255,255,.02);border-left:3px solid;border-radius:0 6px 6px 0}
+.act-label{font-family:'Playfair Display',serif;font-size:1.5em;font-weight:700;color:var(--text-bright)}
+.act-range{font-size:.75em;color:var(--text-dim);letter-spacing:.14em;text-transform:uppercase}
+.act-1{border-color:var(--F)}.act-2{border-color:var(--A)}.act-3{border-color:var(--E)}
+
+/* SCENE CARD */
+.scene-card{display:flex;margin-bottom:13px;border-radius:7px;overflow:hidden;background:var(--card);border:1px solid var(--border);transition:background .15s,border-color .15s}
+.scene-card:hover{background:var(--card-hover);border-color:#242b3d}
+body.edit-mode .scene-card{border-color:#1e2840}
+.stripe{width:6px;flex-shrink:0}
+.scene-inner{padding:16px 20px;flex:1;min-width:0}
+.scene-meta{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.scene-num{font-size:.7em;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;padding-top:3px;flex-shrink:0;min-width:58px;white-space:nowrap}
+.shortest-badge{display:inline-block;font-size:.85em;color:var(--text-dim);border:1px solid var(--border);border-radius:3px;padding:1px 5px;letter-spacing:.1em;text-transform:uppercase;margin-left:6px;opacity:.7}
+.scene-title{font-weight:700;font-size:.97em;color:var(--text-bright);line-height:1.4;margin-bottom:6px;border-radius:3px}
+.scene-body{font-size:.875em;color:var(--text);line-height:1.8;border-radius:3px}
+.scene-note{margin-top:9px;font-size:.78em;color:var(--text-dim);font-style:italic;border-left:2px solid var(--border);padding-left:10px;border-radius:0 3px 3px 0}
+.scene-note.is-empty{display:none}
+body.edit-mode .scene-note.is-empty{display:block;border-left-style:dashed;min-height:1.4em}
+body.edit-mode .scene-note.is-empty:empty::before{content:'Add a note…';opacity:.35;pointer-events:none}
+
+/* EDITABLE */
+.editable[contenteditable="true"]{outline:none;border-radius:3px;padding:2px 4px;margin:0 -4px;cursor:text;transition:background .15s}
+.editable[contenteditable="true"]:hover{background:rgba(255,255,255,.04);box-shadow:0 0 0 1px rgba(255,255,255,.07) inset}
+.editable[contenteditable="true"]:focus{background:rgba(255,255,255,.06);box-shadow:0 0 0 1px rgba(255,255,255,.13) inset}
+
+/* BADGES */
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:2px}
+.badge{font-size:.63em;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;color:#060809;opacity:.92}
+
+/* PLOT TOGGLES */
+.plot-toggles{display:none;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap}
+body.edit-mode .plot-toggles{display:flex}
+.toggles-label{font-size:.68em;color:var(--text-dim);text-transform:uppercase;letter-spacing:.12em;margin-right:2px}
+.plot-toggle{width:26px;height:26px;border-radius:50%;background:transparent;font-size:.7em;font-weight:800;cursor:pointer;transition:all .15s;font-family:'Karla',sans-serif;display:flex;align-items:center;justify-content:center;border:2px solid;flex-shrink:0}
+.plot-toggle:hover{transform:scale(1.15)}
+.plot-toggle:not(.active){opacity:.32}
+.plot-toggle:not(.active):hover{opacity:.72}
+
+/* STATS */
+.stats-section{margin-top:80px;border-top:1px solid var(--border);padding-top:50px}
+.stats-section h2{font-family:'Playfair Display',serif;font-size:1.9em;font-weight:700;color:var(--text-bright);margin-bottom:6px}
+.stats-sub{font-size:.8em;color:var(--text-dim);margin-bottom:35px;letter-spacing:.04em}
+.stat-row{display:flex;align-items:center;gap:14px;margin-bottom:13px}
+.stat-label{min-width:220px;font-size:.83em;display:flex;align-items:center;gap:8px}
+.stat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.stat-name{color:var(--text);font-weight:500}
+.stat-plot-id{font-size:.85em;color:var(--text-dim)}
+.stat-bar-track{flex:1;height:7px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:4px;transition:width .35s ease}
+.stat-count{font-family:'Playfair Display',serif;font-size:1.3em;color:var(--text-bright);min-width:24px;text-align:right;transition:all .2s}
+.stat-scenes-label{font-size:.7em;color:var(--text-dim);min-width:44px}
+
+.footer{margin-top:60px;text-align:center;font-size:.72em;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--border);padding-top:24px}
+
+/* ── FILTER BAR ── */
+.filter-bar{position:sticky;top:0;z-index:40;background:rgba(8,9,15,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:11px 20px;margin:0 -24px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-label{font-size:.7em;color:var(--text-dim);letter-spacing:.16em;text-transform:uppercase;flex-shrink:0;white-space:nowrap}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center}
+.filter-btn{font-family:'Karla',sans-serif;font-size:.7em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:5px 13px;border-radius:20px;border:1.5px solid;cursor:pointer;transition:all .15s;white-space:nowrap;line-height:1}
+.filter-btn-all{border-color:var(--text-dim);color:var(--text-dim);background:transparent}
+.filter-btn-all.active{border-color:var(--text-bright);color:#060809;background:var(--text-bright)}
+.filter-btn-all:hover:not(.active){border-color:var(--text);color:var(--text)}
+.filter-btn-plot{background:transparent}
+.filter-btn-plot.active{color:#060809 !important}
+.filter-btn-plot:not(.active){opacity:.45}
+.filter-btn-plot:not(.active):hover{opacity:.85}
+.filter-count{font-size:.75em;color:var(--text-dim);margin-left:auto;flex-shrink:0;letter-spacing:.04em;white-space:nowrap}
+.filter-count strong{color:var(--text-bright);font-family:'Playfair Display',serif;font-size:1.15em}
+.filter-count .of-total{font-size:.9em}
+.scene-card.hidden-by-filter{display:none}
+.act-header.hidden-by-filter{display:none}
+.no-filter-results{display:none;text-align:center;padding:50px 20px;color:var(--text-dim);font-size:.85em;letter-spacing:.06em}
+.no-filter-results.visible{display:block}
+.no-filter-results span{display:block;font-family:'Playfair Display',serif;font-size:2em;margin-bottom:10px;opacity:.3}
+</style>
+</head>
+<body>
+
+<div id="edit-banner">✎ &nbsp;Edit Mode &nbsp;·&nbsp; Click any text to edit &nbsp;·&nbsp; Use lettered buttons to add or remove plot stripes</div>
+
+<div class="masthead">
+  <h1>The Super Mario Galaxy Movie<br><em>Step Outline</em></h1>
+  <p class="sub">31 Scenes &nbsp;·&nbsp; 3 Acts &nbsp;·&nbsp; 6 Plot Threads</p>
+</div>
+
+<div class="legend" id="legend"></div>
+
+<div class="filter-bar" id="filter-bar">
+  <span class="filter-label">Filter by plot</span>
+  <div class="filter-btns" id="filter-btns"></div>
+  <span class="filter-count" id="filter-count"><strong>31</strong> <span class="of-total">of 31 scenes</span></span>
+</div>
+<div class="no-filter-results" id="no-results"><span>◌</span>No scenes match the selected filter.</div>
+
+<div id="scenes"></div>
+<div class="stats-section">
+  <h2>Scene Count by Plot Thread</h2>
+  <p class="stats-sub">Total scenes each plot thread appears in (active onscreen). Updates live as you toggle plots in edit mode.</p>
+  <div id="stats-rows"></div>
+</div>
+<div class="footer">Original Movie — Narrative Threadmap Analysis &amp; Step Outline</div>
+
+<button id="edit-toggle"><span>✎</span> Edit</button>
+
+<script>
+const PLOTS = {
+  A:{label:'Plot A',name:'Mario + Luigi + Yoshi',color:'#e05252'},
+  B:{label:'Plot B',name:'Peach + Toad',color:'#f48bae'},
+  C:{label:'Plot C',name:'Bowser',color:'#ff8c00'},
+  D:{label:'Plot D',name:'Bowser Jr.',color:'#52c47a'},
+  E:{label:'Plot E',name:'Star Fox',color:'#4a90d9'},
+  F:{label:'Plot F',name:'Rosalina + Luma',color:'#2acfcf'},
+};
+const ORDER = ['A','B','C','D','E','F'];
+
+const SCENES = [
+  {num:1,act:1,title:'Kidnapping at the Comet Observatory',plots:['D','F'],body:`The film opens aboard the Comet Observatory — a luminous, drifting home in deep space, presided over by Rosalina and her beloved Lumas. Before any peace can be established, Bowser Jr. arrives with his armada and launches a sudden, overwhelming assault. Rosalina is taken captive amidst the chaos. One small Luma manages to slip away undetected, escaping into open space.`,note:null},
+  {num:2,act:1,title:'Meet Yoshi at Tostarena Town',plots:['A'],body:`Entirely separate from events in space, Mario and Luigi are called to investigate a disturbance in Tostarena Town. They find Yoshi — a young, enthusiastic dinosaur who hatched in Brooklyn and was chased back to the Mushroom Kingdom after accidentally destroying a dinosaur exhibit in a museum. Despite his chaotic origin story, Yoshi immediately endears himself to the brothers and joins them.`,note:null},
+  {num:3,act:1,title:'Arrival at Planet Bowser / The Luma Escapes',plots:['D','F'],body:`Bowser Jr. arrives at Planet Bowser and presents his captive — Rosalina — to his father. Bowser, still shrunken and imprisoned at Peach's castle following his defeat in the previous film, is shown the scope of his son's plan. Meanwhile, the escaped Luma drifts through deep space, making its way desperately toward the Mushroom Kingdom in search of help.`,note:null},
+  {num:4,act:1,title:"Peach's Birthday Ceremony",plots:['A','B'],body:`Back in the Mushroom Kingdom, the Star Festival is underway. Peach and Toad oversee the festivities, which are warm and celebratory. The weary escaped Luma arrives at last, having made it across the cosmos.`,note:null},
+  {num:5,act:1,title:'"Peach, I F***ing Found You" / Departure',plots:['A','B','F'],body:`The Luma's arrival triggers one of the film's first comedic-dramatic jolts. Having searched so desperately for help, the reunion with Peach earns the line — played entirely straight — "Peach, I f***ing found you." The Luma relays news of Rosalina's kidnapping. Without hesitation, Peach and Toad decide to head to the Gateway Galaxy themselves. The kingdom is left in Mario's hands as they depart.`,note:null},
+  {num:6,act:2,title:'Mario Entrusted / Mario Bros Sequence',plots:['A'],body:`Mario is formally placed in charge of the Mushroom Kingdom while Peach is away. What follows is a showcase Mario Bros sequence — a kinetic, character-building stretch establishing Mario and Luigi's dynamic and their rapport with Yoshi as they handle the kingdom's everyday chaos. Brief glimpses of Peach and Toad heading out contextualise the two parallel story engines now running.`,note:null},
+  {num:7,act:2,title:"Bowser's Masterpiece",plots:['A','C'],body:`Bowser, still shrunk and captive in a chamber at Peach's castle, is shown alone. He has been painstakingly labouring over a painting — a grand portrait of himself and Peach. His "masterpiece." It is over-proportioned, entirely sincere, and deeply melancholy in its way. A pure character scene that establishes Bowser's arc for the film: a man (king?) reduced, reaching for something he cannot reach.`,note:null},
+  {num:8,act:2,title:"Bowser Jr.'s Rescue Attempt / Crash in Honeyhive Galaxy",plots:['A','C','D'],body:`Bowser Jr. launches a bold, reckless mission: fly to the Mushroom Kingdom and extract his father. Using the Koopa Clown Car, he attempts to physically lift Peach's castle. Mario, Luigi, and Yoshi intercept him, and a chaotic aerial battle erupts. The fighting goes badly for everyone — Peach's castle ends up crash-landing in the Honeyhive Galaxy, taking Mario's group with it. Bowser, still inside, survives the impact.`,note:null},
+  {num:9,act:2,title:'The Gateway Galaxy / Ukiki Chase',plots:['B'],body:`Peach and Toad arrive at the Gateway Galaxy. Almost immediately, Ukiki — a quick-fingered pick-pocket monkey — snatches Toad's backpack and vanishes into the crowd. Peach and Toad give chase, threading through the galaxy's winding streets all the way to a shadowy district known as Koopa City.`,note:null},
+  {num:10,act:2,title:"Bowser Jr. Searches for His Father",plots:['D'],body:`The shortest scene in the film. In the aftermath of the Honeyhive crash, Bowser Jr. frantically scans for any trace of his father. He doesn't know where Bowser ended up. It's barely more than a beat — a brief, anxious interlude that conveys Bowser Jr.'s disorientation and the emotional stakes of the father-son thread before it resolves.`,note:'Confirmed shortest scene in the film.',shortest:true},
+  {num:11,act:2,title:'Bowser Unshrunk / Uneasy Alliance',plots:['A','C'],body:`In Honeyhive Galaxy, Mario's group finds Bowser — still small, and in a precarious situation. Bowser, with characteristic cunning, ragebaits Mario into striking him. The blow, unintentionally, restores Bowser to his full size. Rather than erupting into violence, Bowser laughs, genuinely thanks Mario for it, and — to everyone's surprise — agrees to temporarily travel with the group. An uneasy, comedic alliance is born.`,note:null},
+  {num:12,act:2,title:'Casino Sequence and Wart Battle',plots:['B'],body:`Ukiki leads Peach and Toad to a casino in Koopa City run by Wart. Peach brawls through Wart's minions in a full-scale fight sequence before confronting Wart himself. She defeats him and forces him to reveal that Rosalina is being held in the Space Junk Galaxy. Wart, in the grand tradition of spineless informants, immediately tips off the Bowsers that the heroes are en route.`,note:null},
+  {num:13,act:2,title:'Queen Bee Confrontation / The Paths Diverge',plots:['A','C'],body:`A brief but colourful scene in the Honeyhive Galaxy: Mario, Luigi, Yoshi, and the newly-allied Bowser have a character-driven encounter with the Queen Bee — testing the strange dynamic of this temporary group. After this, Plot A's thread goes offscreen: Mario and Luigi head toward the Gateway Galaxy separately. Bowser parts from them, striking a deal to pay off the brothers' legal sentence by working in the Honeyhive mines.`,note:null},
+  {num:14,act:2,title:"The Mines / Father-Son Reunion / Kamek's Intelligence",plots:['C','D'],body:`Mario and Luigi pass briefly through the mines. More significantly: Bowser Jr., having tracked his father at last, arrives in his UFO and extracts Bowser in a genuine, emotionally-charged reunion — the first time the two have met face-to-face since Bowser's defeat. Kamek is present and delivers key intelligence: Rosalina is confirmed to be held in the Space Junk Galaxy. The Bowser father-and-son thread is now fully active.`,note:null},
+  {num:15,act:2,title:'Fox McCloud Arrives',plots:['B','E'],body:`Peach and Toad return to the Gateway Galaxy following the Wart ordeal. Here, they encounter Fox McCloud — wandering the Gateway Galaxy between jobs. Fox takes stock of the situation and offers his piloting skills to get the group to the Space Junk Galaxy. Plot E, the Star Fox thread, activates for the first time.`,note:null},
+  {num:16,act:2,title:'Date Musings / Everyone Assembles / Takeoff',plots:['A','B','E'],body:`The scene opens quietly: Mario, alone for a moment, mulls the idea of asking Peach on a date — a tender, tentative character beat. Then the groups converge at the Gateway Galaxy for the first time in the film: Mario, Luigi, and Yoshi from one direction; Peach, Toad, and Fox from another; the Bowser duo from elsewhere. It's the film's first true ensemble gathering. The scene closes as the full group — all five active plot threads — takes off together toward the Space Junk Galaxy.`,note:null},
+  {num:17,act:2,title:'Ambush / The Brothers Turned to Babies',plots:['A','B','C','D','E'],body:`En route to the Space Junk Galaxy, Bowser Jr. springs an ambush from his UFO. Fox engages in a high-speed aerial dogfight in the Arwing. During the chaos, Bowser Jr. fires the Super Scope — striking Mario and Luigi directly, transforming them both into helpless infants. The Arwing is critically damaged in the exchange.`,note:null},
+  {num:18,act:2,title:'Crash in Fossil Falls / Baby Gun Recovered / T-Rex Sequence',plots:['A','B','E'],body:`The damaged craft crash-lands in Fossil Falls — a prehistoric world of towering rock formations and living dinosaurs. The Super Scope (the "baby gun") is located in the wreckage. The scene closes with its most memorable set piece: a Tyrannosaurus charges the group, Yoshi leads a breakneck sprint through the terrain, and at the last moment the Super Scope is retrieved and used to restore Mario and Luigi to their proper size.`,note:null},
+  {num:19,act:2,title:'The Peach Crashout / Luigi Contacts the Observatory',plots:['A','B','F'],body:`With the crash, the injuries, and the failed plans piling up, Peach finally hits her limit. She vents — a full emotional "crashout." Mario tells her not to get frustrated. Peach wheels on him: <em>"Princesses don't get frustrated!"</em> Mario, with total sincerity, replies: <em>"Well… can I be 'not frustrated' with you?"</em> Peach pauses. Smiles. They crash out together — a small, perfect moment. Elsewhere, Luigi accidentally contacts the Comet Observatory via a stray communicator. The Lumas receive the signal and lock onto the group's location.`,note:null},
+  {num:20,act:2,title:"Bowser Chooses Friends / Bowser Jr. Shows Dad His Planet",plots:['C','D'],body:`At the top of this scene, Bowser faces a pivotal moment: he can return to his son and empire, or stay with the unlikely friends he's made — Mario's crew. He chooses his friends. Simultaneously, Bowser Jr. brings his father to see what he has built. Planet Bowser: an entire world constructed in Bowser's honour. For all his villainy, Bowser Jr.'s motivation has always been simple devotion. Bowser's reaction carries the scene.`,note:null},
+  {num:21,act:2,title:'The Comet Observatory Arrives / All Aboard',plots:['A','B','E','F'],body:`Called by Luigi's accidental signal, the Comet Observatory arrives in Fossil Falls, piloted by the Lumas. For a brief, rare moment all six plot threads converge on the same location. Everyone boards. The Observatory departs for the endgame.`,note:null},
+  {num:22,act:2,title:'Peach Discovers the Truth',plots:['B','F'],body:`Aboard the Observatory, Peach explores Rosalina's quarters. She uncovers records, memories, and artefacts that piece together the truth: Rosalina is her long-lost older sister. Both were born of stardust. Rosalina had sent infant Peach to the Mushroom Kingdom to keep her safe from an unidentified threat. The revelation lands with full weight — everything Peach has been fighting for is now also about family.`,note:null},
+  {num:23,act:2,title:'Planet Bowser / Doomsday Weapon Activated',plots:['C','D','F'],body:`On Planet Bowser, Bowser and Bowser Jr. walk the planet together. Bowser takes in what his son has built — monument, architecture, spectacle — all erected in his honour. Bowser is genuinely moved. Then Bowser Jr. activates the Doomsday weapon — with Rosalina trapped inside as its power source. The weapon hums to life, threatening the universe. This beat lands just before the Act 3 card drops.`,note:'Doomsday weapon activation occurs before Act 3 begins.'},
+  {num:24,act:3,title:'Space Junk Galaxy Sequence / Toad Stays Behind',plots:['A','B','E','F'],body:`Fox McCloud pilots the Comet Observatory on an intercept course toward Planet Bowser. Toad — quietly, without fanfare — stays aboard with Fox rather than joining the assault. It's his Act 3 departure from Peach's thread. The heroes plunge into the Space Junk Galaxy in a spectacular set piece: navigating debris fields, dogfighting Bowser Jr.'s defences, and closing in on the planet.`,note:'Toad remains with Star Fox for the remainder of the film.'},
+  {num:25,act:3,title:'The Group Splits Up',plots:['A','B'],body:`The group touches down on Planet Bowser and immediately confronts the scale of what's ahead. With no single route to the Doomsday weapon, they agree to divide. Plot threads separate — each heading toward the climax by a different path.`,note:null},
+  {num:26,act:3,title:'Obstacle Course / Security Protocol Activated',plots:['A','B','C','D'],body:`Mario's group runs a brutal obstacle course through Planet Bowser's internal defences. The traps are ingenious and escalating. Watching the intruders advance on his monitors, Bowser Jr. triggers a security protocol — a full lockdown that dramatically raises the danger of every obstacle already in play.`,note:null},
+  {num:27,act:3,title:'Bowser Showdown / Dry Bowser / Mario Stays Behind',plots:['A','B','C'],body:`Mario and Bowser face each other directly. The confrontation ends with Mario dropping Bowser into a lava moat — a decisive blow. It appears finished. Then Bowser surges back from the lava in skeletal form: Dry Bowser, bleached bone and burning rage, more dangerous than before. Mario makes the call: he stays behind to hold Dry Bowser off, buying time and safe passage for the rest of the group.`,note:null},
+  {num:28,act:3,title:'Peach Breaks In',plots:['B','F'],body:`Peach, now alone on her path, reaches the Doomsday weapon. She presses forward into its core, working against the draining energy field to reach Rosalina and shut the weapon down from the inside.`,note:null},
+  {num:29,act:3,title:'Reunion / Final Battle / The Ruined Dragon',plots:['A','B','D','F'],body:`Luigi and Yoshi, having found each other after the split, reunite with Mario — still holding the line against Dry Bowser. The core group reassembles for the final push. Bowser Jr., cornered and defeated in direct combat, reaches for one last weapon: his paintbrush. He uses it to summon the Ruined Dragon — a monstrous entity conjured entirely from his own art. It is his most personal and devastating move. The group faces it together, and together brings it down.`,note:"The Ruined Dragon is a distinct entity summoned by Bowser Jr.'s paintbrush — not a form of Dry Bowser."},
+  {num:30,act:3,title:'Power of Friendship / Everyone Reunites',plots:['A','B','C','D','E','F'],body:`With the Ruined Dragon defeated, Peach frees Rosalina from the Doomsday weapon. The two sisters embrace — the film's emotional resolution. The energy released transforms Planet Bowser. Fox and Toad arrive from the Observatory. The full ensemble reunites for the first time since boarding. The Lumas, having never seen the Mushroom Kingdom, express a wish to visit.`,note:null},
+  {num:31,act:3,title:'Rebuilding / Goodbyes / End',plots:['A','B','C','D','E','F'],body:`Peach's castle is rebuilt. The Bowsers are escorted to prison by Fox McCloud, who says his goodbyes before returning to his own galaxy. The Lumas scatter toward the Mushroom Kingdom. Peach thanks Mario — a kiss on the cheek. Everything settles into something resembling peace. The film ends.`,note:null},
+];
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function gradient(plots){
+  const p=ORDER.filter(k=>plots.includes(k));
+  if(!p.length) return '#2a2a2a';
+  if(p.length===1) return PLOTS[p[0]].color;
+  const seg=100/p.length;
+  return 'linear-gradient(to bottom,'+p.flatMap((k,i)=>[`${PLOTS[k].color} ${(i*seg).toFixed(1)}%`,`${PLOTS[k].color} ${((i+1)*seg).toFixed(1)}%`]).join(',')+')';
+}
+function badges(plots){
+  return ORDER.filter(k=>plots.includes(k)).map(k=>`<span class="badge" style="background:${PLOTS[k].color}">${PLOTS[k].label}</span>`).join('');
+}
+function toggles(num,plots){
+  return ORDER.map(k=>{
+    const on=plots.includes(k),c=PLOTS[k].color;
+    return `<button class="plot-toggle${on?' active':''}" data-s="${num}" data-p="${k}" style="${on?`border-color:${c};background:${c};color:#050809`:`border-color:${c};color:${c}`}" title="${PLOTS[k].name}">${k}</button>`;
+  }).join('');
+}
+
+// ── Legend ─────────────────────────────────────────────────────────────
+const legendEl=document.getElementById('legend');
+ORDER.forEach(k=>{
+  const p=PLOTS[k];
+  legendEl.innerHTML+=`<div class="legend-item"><div class="legend-pip" style="background:${p.color}"></div><span><strong>${p.label}</strong> — ${p.name}</span></div>`;
+});
+
+// ── Scenes ─────────────────────────────────────────────────────────────
+const scenesEl=document.getElementById('scenes');
+let curAct=0;
+const AL={1:'Act One',2:'Act Two',3:'Act Three'};
+const AR={1:'Scenes 1–5',2:'Scenes 6–23',3:'Scenes 24–31'};
+const AC={1:'act-1',2:'act-2',3:'act-3'};
+
+SCENES.forEach(s=>{
+  if(s.act!==curAct){
+    curAct=s.act;
+    scenesEl.innerHTML+=`<div class="act-header ${AC[curAct]}" id="act-header-${curAct}"><span class="act-label">${AL[curAct]}</span><span class="act-range">${AR[curAct]}</span></div>`;
+  }
+  const sb=s.shortest?`<span class="shortest-badge">Shortest</span>`:'';
+  const nc=s.note?'':' is-empty';
+  scenesEl.innerHTML+=`
+<div class="scene-card" id="card-${s.num}">
+  <div class="stripe" id="stripe-${s.num}" style="background:${gradient(s.plots)}"></div>
+  <div class="scene-inner">
+    <div class="scene-meta">
+      <span class="scene-num">Scene ${s.num}${sb}</span>
+      <div style="flex:1;min-width:0">
+        <div class="scene-title editable" data-s="${s.num}" data-f="title" contenteditable="false">${s.title}</div>
+        <div class="badges" id="badges-${s.num}">${badges(s.plots)}</div>
+        <div class="plot-toggles" id="toggles-${s.num}"><span class="toggles-label">Plots:</span>${toggles(s.num,s.plots)}</div>
+      </div>
+    </div>
+    <div class="scene-body editable" data-s="${s.num}" data-f="body" contenteditable="false">${s.body}</div>
+    <div class="scene-note editable${nc}" id="note-${s.num}" data-s="${s.num}" data-f="note" contenteditable="false">${s.note||''}</div>
+  </div>
+</div>`;
+});
+
+// ── Stats ──────────────────────────────────────────────────────────────
+function updateStats(){
+  const counts={};
+  ORDER.forEach(k=>counts[k]=0);
+  SCENES.forEach(s=>s.plots.forEach(k=>counts[k]++));
+  const max=Math.max(...Object.values(counts));
+  document.getElementById('stats-rows').innerHTML=ORDER.map(k=>{
+    const p=PLOTS[k],n=counts[k],pct=max>0?(n/max*100).toFixed(1):0;
+    return `<div class="stat-row">
+      <div class="stat-label"><div class="stat-dot" style="background:${p.color}"></div><span class="stat-name">${p.name}</span><span class="stat-plot-id">${p.label}</span></div>
+      <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      <span class="stat-count">${n}</span><span class="stat-scenes-label">scenes</span>
+    </div>`;
+  }).join('');
+}
+updateStats();
+
+// ── Filter ─────────────────────────────────────────────────────────────
+const activeFilters = new Set();
+const filterBtnsEl = document.getElementById('filter-btns');
+const filterCountEl = document.getElementById('filter-count');
+const noResultsEl  = document.getElementById('no-results');
+
+filterBtnsEl.innerHTML = `<button class="filter-btn filter-btn-all active" data-filter="all">All Scenes</button>`;
+ORDER.forEach(k => {
+  const p = PLOTS[k];
+  filterBtnsEl.innerHTML += `<button class="filter-btn filter-btn-plot" data-filter="${k}" style="border-color:${p.color};color:${p.color}" title="${p.name}">${p.label} — ${p.name}</button>`;
+});
+
+function applyFilter() {
+  const noFilter = activeFilters.size === 0;
+  filterBtnsEl.querySelector('[data-filter="all"]').classList.toggle('active', noFilter);
+  let visibleCount = 0;
+  const actVisible = {1:false, 2:false, 3:false};
+  SCENES.forEach(s => {
+    const card = document.getElementById(`card-${s.num}`);
+    const show = noFilter || [...activeFilters].some(f => s.plots.includes(f));
+    card.classList.toggle('hidden-by-filter', !show);
+    if (show) { visibleCount++; actVisible[s.act] = true; }
+  });
+  [1,2,3].forEach(a => {
+    const h = document.getElementById(`act-header-${a}`);
+    if (h) h.classList.toggle('hidden-by-filter', !actVisible[a]);
+  });
+  filterCountEl.innerHTML = `<strong>${visibleCount}</strong> <span class="of-total">of ${SCENES.length} scenes</span>`;
+  noResultsEl.classList.toggle('visible', visibleCount === 0);
+}
+
+filterBtnsEl.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  const f = btn.dataset.filter;
+  if (f === 'all') {
+    activeFilters.clear();
+    filterBtnsEl.querySelectorAll('.filter-btn-plot').forEach(b => {
+      b.classList.remove('active');
+      const p = PLOTS[b.dataset.filter];
+      b.style.cssText = `border-color:${p.color};color:${p.color}`;
+    });
+  } else {
+    if (activeFilters.has(f)) {
+      activeFilters.delete(f);
+      btn.classList.remove('active');
+      const p = PLOTS[f];
+      btn.style.cssText = `border-color:${p.color};color:${p.color}`;
+    } else {
+      activeFilters.add(f);
+      btn.classList.add('active');
+      const p = PLOTS[f];
+      btn.style.cssText = `border-color:${p.color};background:${p.color};color:#060809`;
+    }
+  }
+  applyFilter();
+});
+
+// ── Edit toggle ────────────────────────────────────────────────────────
+const btn=document.getElementById('edit-toggle');
+btn.addEventListener('click',()=>{
+  const on=document.body.classList.toggle('edit-mode');
+  btn.classList.toggle('active',on);
+  btn.innerHTML=on?'<span>✓</span> Done':'<span>✎</span> Edit';
+  document.querySelectorAll('.editable').forEach(el=>el.contentEditable=on?'true':'false');
+});
+
+// ── Plot toggle ────────────────────────────────────────────────────────
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.plot-toggle');
+  if(!t) return;
+  const num=parseInt(t.dataset.s),key=t.dataset.p;
+  const scene=SCENES.find(s=>s.num===num);
+  const col=PLOTS[key].color;
+  if(scene.plots.includes(key)){
+    scene.plots=scene.plots.filter(p=>p!==key);
+    t.classList.remove('active');
+    t.style.cssText=`border-color:${col};color:${col}`;
+  } else {
+    scene.plots.push(key);
+    scene.plots.sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b));
+    t.classList.add('active');
+    t.style.cssText=`border-color:${col};background:${col};color:#050809`;
+  }
+  document.getElementById(`stripe-${num}`).style.background=gradient(scene.plots);
+  document.getElementById(`badges-${num}`).innerHTML=badges(scene.plots);
+  updateStats();
+});
+
+// ── Text sync ──────────────────────────────────────────────────────────
+document.addEventListener('input',e=>{
+  const el=e.target;
+  if(!el.classList.contains('editable')) return;
+  const num=parseInt(el.dataset.s),field=el.dataset.f;
+  const scene=SCENES.find(s=>s.num===num);
+  if(scene&&field) scene[field]=el.innerHTML;
+  if(field==='note'){
+    const ne=document.getElementById(`note-${num}`);
+    el.textContent.trim()?ne.classList.remove('is-empty'):ne.classList.add('is-empty');
+  }
+});
+</script>
+</body>
+</html>
